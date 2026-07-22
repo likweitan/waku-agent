@@ -10,7 +10,6 @@ Setup:
 
 from __future__ import annotations
 
-import asyncio
 import os
 
 from waku.app import Waku
@@ -38,9 +37,7 @@ def _build_client(allowed: str):
             return
         print(f"you › {message.content}")
         async with message.channel.typing():
-            result = await asyncio.to_thread(
-                waku.respond, message.content, observer=_observer, source="discord"
-            )
+            result = waku.respond(message.content, observer=_observer, source="discord")
         print(f"waku › {result.reply}")
         await message.reply(result.reply or "(no reply)")
 
